@@ -1,100 +1,70 @@
-var path = require('path');
+// gulp configuration file
+var gulp = require("gulp");
+var gutil = require("gulp-util");
+var webpack = require("webpack");
+var zip = require("gulp-zip");
+var path = require("path");
+var WebpackDevServer = require("webpack-dev-server");
+
+var webpackConfig = require("./webpack.config.js");
+var webpackDevConfig = require("./webpackDevServer.config.js");
+
 var del = require('del');
-var gulp = require('gulp');
-var $ = require('gulp-load-plugins')();
+var PORT = 8080;
 
-// set variable via $ gulp --type production
-var environment = $.util.env.type || 'development';
-var isProduction = environment === 'production';
-var webpackConfig = require('./webpack.config.js').getConfig(environment);
+// set default task to developer build
+gulp.task("default", ["dev-server"]);
 
-var port = $.util.env.port || 1337;
-var app = 'app/';
-var dist = 'dist/';
-
-// https://github.com/ai/autoprefixer
-var autoprefixerBrowsers = [                 
-  'ie >= 9',
-  'ie_mob >= 10',
-  'ff >= 30',
-  'chrome >= 34',
-  'safari >= 6',
-  'opera >= 23',
-  'ios >= 6',
-  'android >= 4.4',
-  'bb >= 10'
-];
-
-gulp.task('scripts', function() {
-  return gulp.src(webpackConfig.entry)
-    .pipe($.webpack(webpackConfig))
-    .pipe(isProduction ? $.uglify() : $.util.noop())
-    .pipe(gulp.dest(dist + 'js/'))
-    .pipe($.size({ title : 'js' }))
-    .pipe($.connect.reload());
+gulp.task("clean", function () {
+    del(["build", "ermkm-front.zip"]);
 });
 
-// copy html from app to dist
-gulp.task('html', function() {
-  return gulp.src(app + 'index.html')
-    .pipe(gulp.dest(dist))
-    .pipe($.size({ title : 'html' }))
-    .pipe($.connect.reload());
+gulp.task("dev-server", function () {
+    // Start a webpack-dev-server
+    new WebpackDevServer(webpack(webpackDevConfig), {
+        contentBase: path.resolve(__dirname, "build"),
+        publicPath: "/",
+
+        stats: {
+            colors: true,
+            hot: true
+        },
+        proxy: {
+            "*": "http://localhost:9595"
+        }
+    }).listen(PORT, "localhost", function (err) {
+        if (err) throw new gutil.PluginError("dev-server", err);
+        gutil.log(`[dev-server]`, `Демо стенд доступен по адресу: http://localhost:${PORT}/`);
+        gutil.log(`[dev-server]`, `Демо стенд c hot-module-replacement доступен по адресу: http://localhost:${PORT}/webpack-dev-server/ [/ слеш в конце обязательно]`);
+    });
 });
 
-gulp.task('styles',function(cb) {
-
-  // convert stylus to css
-  return gulp.src(app + 'stylus/main.styl')
-    .pipe($.stylus({
-      // only compress if we are in production
-      compress: isProduction,
-      // include 'normal' css into main.css
-      'include css' : true
-    }))
-    .pipe($.autoprefixer({browsers: autoprefixerBrowsers})) 
-    .pipe(gulp.dest(dist + 'css/'))
-    .pipe($.size({ title : 'css' }))
-    .pipe($.connect.reload());
-
+//
+// production build configuration
+//
+gulp.task("production", function (callback) {
+    webpack(webpackConfig, function (err, stats) {
+        if (err) throw new gutil.PluginError("production", err);
+        gutil.log("[production]", stats.toString({
+            colors: true
+        }));
+        callback();
+    });
 });
 
-// add livereload on the given port
-gulp.task('serve', function() {
-  $.connect.server({
-    root: dist,
-    port: port,
-    livereload: {
-      port: 35729
-    }
-  });
+//
+// build distributive
+//
+gulp.task("dist", ["clean", "production"], function () {
+    return gulp.src('build/**')
+        .pipe(zip('ermkm-front.zip'))
+        .pipe(gulp.dest('.'));
 });
 
-// copy images
-gulp.task('images', function(cb) {
-  return gulp.src(app + 'images/**/*.{png,jpg,jpeg,gif}')
-    .pipe($.size({ title : 'images' }))
-    .pipe(gulp.dest(dist + 'images/'));
-});
-
-// watch styl, html and js file changes
-gulp.task('watch', function() {
-  gulp.watch(app + 'stylus/*.styl', ['styles']);
-  gulp.watch(app + 'index.html', ['html']);
-  gulp.watch(app + 'scripts/**/*.js', ['scripts']);
-  gulp.watch(app + 'scripts/**/*.jsx', ['scripts']);
-});
-
-// remove bundels
-gulp.task('clean', function(cb) {
-  return del([dist], cb);
-});
-
-
-// by default build project and then watch files in order to trigger livereload
-gulp.task('default', ['images', 'html','scripts', 'styles', 'serve', 'watch']);
-
-// waits until clean is finished then builds the project
-gulp.task('build', ['clean'], function(){
-  gulp.start(['images', 'html','scripts','styles']);
+//
+// selenium build configuration
+//
+gulp.task("test", function () {
+    // todo: complete build script
+    console.error("Not implemented yet!");
 });
