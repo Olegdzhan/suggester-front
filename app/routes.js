@@ -14,3 +14,18 @@ export const routes = {
 		}
 	]*/
 };
+
+export const navLis = [
+	{
+		href: '/',
+		caption: 'Рекомендации'
+	},
+	{
+		href: '/mySuggests',
+		caption: 'Мои рекомендации'
+	},
+	{
+		href: '/profile',
+		caption: 'Мой профиль'
+	}
+];

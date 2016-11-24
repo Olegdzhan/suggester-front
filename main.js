@@ -7,7 +7,7 @@ import { createStore } from 'redux';
 import { Router } from 'react-router';
 import { routes } from './app/routes';
 
-import store, { history } from './store';
+import store, { history } from './app/store';
 
 import css from './public/styles/styles.styl';
 

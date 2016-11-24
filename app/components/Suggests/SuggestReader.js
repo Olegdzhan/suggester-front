@@ -1,9 +1,9 @@
 import React from 'react';
 
-import SuggestList from './SuggestList';
+import SuggestList from '../../containers/SuggestList';
 
 const SuggestReader = props => {
-	return <SuggestList></SuggestList>
+	return <SuggestList />
 };
 
 export default SuggestReader;
