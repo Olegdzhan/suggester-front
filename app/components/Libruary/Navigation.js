@@ -5,7 +5,7 @@ const Navigation = props => {
 	const { lis } = props;
 
 	return (
-		<ul className="nav nav-pills">
+		<ul className="nav">
 			{
 				lis.map((li, i) => {
 					return (

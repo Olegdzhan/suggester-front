@@ -6,8 +6,8 @@ import rootReducer from './reducers';
 
 const defaultState = {
 	suggests: [],
-	mySuggests: [],
-	profile: {}
+	comments: {},
+	profiles: []
 };
 
 const store = createStore(rootReducer, defaultState);

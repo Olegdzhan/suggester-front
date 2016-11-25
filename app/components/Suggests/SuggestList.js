@@ -15,13 +15,8 @@ export default class SuggestList extends Component {
 		const elements = this.props.suggests.map((suggest, i) => {
 			return (
 				<li key={i}>
-					<SuggestListItem 
-						author={suggest.author}
-						category={suggest.category}
-						dateTime={suggest.dateTime}
-						suggest={suggest.suggest}
-						likes={suggest.likes}
-						comments={suggest.comments}
+					<SuggestListItem
+						{...suggest}
 					/>
 				</li>
 			);
