@@ -14,10 +14,10 @@ export const fetchAllComments = suggestId => {
 	}
 }
 
-export const addComment = (suggestId, author, comment) => ({
+export const addComment = (suggestId, userId, comment) => ({
 	type: types.ADD,
 	suggestId,
-	author,
+	userId,
 	comment
 });
 

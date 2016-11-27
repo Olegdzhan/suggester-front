@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 
-import { Navigation } from './components/Libruary';
+import { 
+	Navigation,
+	Navbar,
+	NavbarLogo,
+	NavbarInput
+} from './components/Libruary';
 import { navLis } from './routes';
 
 export default class App extends Component {
@@ -10,20 +15,16 @@ export default class App extends Component {
 
 	render() {
 		return (
-			<div className="container">
-				<div className="row">
-					<div className="col-xs-12">
-						<h1>Suggester</h1>
-					</div>
+			<div>
+				<Navbar>
+					<NavbarLogo src="" href="/">SugGuest</NavbarLogo>
+					<NavbarInput />
+					<Navigation lis={navLis} />
+				</Navbar>				
+				<div className="app-container">
+					{this.props.children}
 				</div>
-				<div className="row">
-					<div className="col-xs-12 col-sm-4">
-						<Navigation lis={navLis} />					
-					</div>
-					<div className="col-xs-12 col-sm-8">
-						{this.props.children}
-					</div>
-				</div>				
+								
 			</div>
 		);
 	}

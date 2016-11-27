@@ -17,6 +17,7 @@ export default class SuggestList extends Component {
 				<li key={i}>
 					<SuggestListItem
 						{...suggest}
+						incrementLikes={this.props.incrementLikes}
 					/>
 				</li>
 			);

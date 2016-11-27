@@ -18,15 +18,19 @@ export const routes = {
 
 export const navLis = [
 	{
-		href: '/',
-		caption: 'Рекомендации'
-	},
-	{
-		href: '/mySuggests',
-		caption: 'Мои рекомендации'
+		href: '/notifications',
+		src:  '/public/img/app/heart.svg',
+		alt: 'Уведомления'
 	},
 	{
 		href: '/profile',
-		caption: 'Мой профиль'
+		src: '/public/img/app/user.svg',
+		alt: 'Профиль'
+	},
+	{
+		href: '/settings',
+		src: '/public/img/app/settings.svg',
+		alt: 'Настройки'
 	}
+
 ];

@@ -1,4 +1,4 @@
-export default const comments = {
+const comments = {
 	'zxcvbn': [
 		{
 			id: 4634,
@@ -27,4 +27,6 @@ export default const comments = {
 			dateTime: '12.10.2016 - 18:59'
 		}
 	]
-}
+};
+
+export default comments;
