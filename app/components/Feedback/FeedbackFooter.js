@@ -1,49 +1,35 @@
 import React, { Component } from 'react';
-
-import Finder from '../../utils/Finder';
+import CommentForm from './CommentForm';
 
 export default class FeedbackFooter extends Component {
 	
 	constructor(props) {
 		super(props);
 
-		this.finder = new Finder;
-
-		this.submitForm = this.submitForm.bind(this);		
+		this.onChangeLikes = this.onChangeLikes.bind(this);
 	}
 
-	submitForm(e) {
-		e.preventDefault();
-		console.log(this.refs.newComment.value);
-	}
-
-	render() {
-
-		const {
-			likes, 
+	onChangeLikes() {
+		const { 
 			suggestId,
-			incrementLikes,
-			decrementLikes 
+			changeLikes 
 		} = this.props;
+		changeLikes(suggestId, {id: 2383, name: 'liker44'})
+	}
 
-		const currentIndex = this.finder.findIndexOfObjInArr(likes, 'id', 2383);
-		
+	render() {		
 		return (
-			<form className="comment-form" onSubmit={this.submitForm}>
+			<div>
 				<button 
 					type="button" 
 					className="like-btn"
-					onClick={() => {
-						currentIndex ? decrementLikes(suggestId, 2383) : incrementLikes(suggestId, 2383);
-					}}
+					onClick={this.onChangeLikes}
 				>
 					<img src="/public/img/app/heart.svg" alt="likes" />
 				</button>
-				<input 
-					type="text" 
-					className="comment-input" 
-					ref="newComment" />
-			</form>
+				<CommentForm addComment={this.props.addComment} />
+			</div>
 		);
 	}
 }
+

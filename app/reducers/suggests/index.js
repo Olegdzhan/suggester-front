@@ -1,26 +1,27 @@
+import { combineReducers } from 'redux';
+
 import types from '../../actions/types';
 import { likes } from './likes';
+import { comments } from './comments';
 
-import Finder from '../../utils/Finder';
-
-const finder = new Finder();
+import Decomposer from '../../utils/Decomposer';
 
 export const suggests = (state = [], action) => {
 
-	if (action.type === types.LIKES.INCREMENT || action.type === types.LIKES.DECREMENT) {
-		let currentIndex = finder.findIndexOfObjInArr(state, 'id', action.suggestId);
-		let newState = [...state];
-		newState[currentIndex].likes = likes(state[currentIndex].likes, action);
-		return newState;
-	}
+	const dec = new Decomposer(state, action, 'id');
 	
-	switch(action.type) {		
+	switch(action.type) {
+		case types.LIKES.CHANGE:
+			return dec.getDecomposedReducer(action.suggestId, 'likes', likes);
 		
 		case types.SUGGESTS.RECIEVE:
 			return [
 				...action.suggests
 			];
-			
+
+		case types.COMMENTS.ADD:
+			console.log(action.comment)
+			return state;			
 		
 		default:
 			return state;

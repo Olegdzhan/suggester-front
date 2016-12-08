@@ -1,20 +1,25 @@
 import types from '../../actions/types';
-
 import Finder from '../../utils/Finder';
 
-const finder = new Finder();
-
 export const likes = (state = [], action) => {
-	console.log(state);
+
+	const finder = new Finder();
 	
 	switch(action.type) {
 
-		case types.LIKES.INCREMENT:
-			return [...state, { id: action.user.id, name: action.user.name }];
-		
-		case types.LIKES.DECREMENT:
-			let currentIndex = finder.findIndexOfObjInArr(state, 'id', action.userId);			
-			return [...state.slice(0, currentIndex), ...state.slice(currentIndex+1)];
+		case types.LIKES.CHANGE:
+			let currentIndex = finder.findIndexOfObjInArr(state, 'id', action.user.id);
+			if (currentIndex) {
+				return [
+					...state.slice(0, currentIndex), 
+					...state.slice(currentIndex + 1)
+				];
+			} else {
+				return [
+					...state, 
+					action.user
+				];
+			}
 		
 		default:
 			return state;

@@ -1,9 +1,7 @@
 import types from '../types';
 
-export const addComment = (suggestId, userId, comment) => ({
+export const addComment = comment => ({
 	type: types.COMMENTS.ADD,
-	suggestId,
-	userId,
 	comment
 });
 

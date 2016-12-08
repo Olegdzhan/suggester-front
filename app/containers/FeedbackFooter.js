@@ -8,8 +8,7 @@ import FeedbackFooter from '../components/Feedback/FeedbackFooter';
 
 const mapDispatchToProps = dispatch => bindActionCreators({
 	addComment: comments.addComment,
-	incrementLikes: likes.incrementLikes,
-	decrementLikes: likes.decrementLikes
+	changeLikes: likes.changeLikes
 }, dispatch);
 
 export default connect(null, mapDispatchToProps)(FeedbackFooter);
