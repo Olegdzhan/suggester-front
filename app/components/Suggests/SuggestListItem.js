@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 
+import CommentList from '../Feedback/CommentList';
+import FeedbackFooter from '../../containers/FeedbackFooter';
+
 const SuggestListItem = props => {
+	
 	const {
 		id,
 		author,
 		dateTime,
 		suggest,
 		category,
-		likes,
-		incrementLikes
+		comments,
+		likes
 	} = props;
 
 	return (		
@@ -24,21 +28,14 @@ const SuggestListItem = props => {
 			</div>
 			<div className="suggest-list-item__feedback">
 				<span className="likes-amount">{likes.length} отметок "Нравится"</span>
+				<CommentList comments={comments} />
 			</div>
 			<div className="suggest-list-item__footer">
-				<form className="comment-form">
-					<button 
-						type="button" 
-						className="like-btn"
-						onClick={() => {
-							incrementLikes(id, {id: 4634, name: 'liker2'});
-						}}>
-						<img src="/public/img/app/heart.svg" alt="likes" />
-					</button>
-				</form>
+				<FeedbackFooter likes={likes} suggestId={id} />
 			</div>
 		</div>
 	);
+	
 }
 
 export default SuggestListItem;

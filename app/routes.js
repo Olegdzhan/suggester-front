@@ -1,19 +1,18 @@
 import App from './App';
-import SuggestReader from './components/Suggests/SuggestReader';
-import SingleSuggest from './containers/SingleSuggest';
+import SuggestReader from './containers/SuggestReader';
 
 export const routes = {
 	path: '/',
 	component: App,
 	indexRoute: {
 		component: SuggestReader
-	},
+	}/*,
 	childRoutes: [
 		{
 			path: 'suggest/:id',
 			component: SingleSuggest
 		}
-	]
+	]*/
 };
 
 export const navLis = [

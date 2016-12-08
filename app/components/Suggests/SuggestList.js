@@ -1,33 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import SuggestListItem from './SuggestListItem';
 
-export default class SuggestList extends Component {
-	constructor(props) {
-		super(props);
-	}
-
-	componentWillMount() {
-		this.props.fetchAllSuggests();
-	}
+const SuggestList = props => {	
 	
-	render() {
-		const elements = this.props.suggests.map((suggest, i) => {
-			return (
-				<li key={i}>
-					<SuggestListItem
-						{...suggest}
-						incrementLikes={this.props.incrementLikes}
-					/>
-				</li>
-			);
-		});
-
+	const elements = props.suggests.map(suggest => {
 		return (
-			<ul>
-				{elements}
-			</ul>
+			<li key={suggest.id}>
+				<SuggestListItem
+					{...suggest}
+				/>
+			</li>
 		);
-	} 
+	});
+	
+
+	return (
+		<ul>
+			{elements}
+		</ul>
+	);
 	
 };
+
+export default SuggestList;

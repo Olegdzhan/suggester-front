@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import SuggestList from '../../containers/SuggestList';
+import SuggestList from './SuggestList';
 
-const SuggestReader = props => {
-	return <SuggestList />
-};
+export default class SuggestReader extends Component {
+	
+	componentWillMount() {
+		this.props.fetchAllSuggests();
+	}
 
-export default SuggestReader;
+	render() {
+		return <SuggestList suggests={this.props.suggests} />
+	}	
+}
