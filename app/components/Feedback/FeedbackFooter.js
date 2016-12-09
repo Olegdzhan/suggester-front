@@ -19,7 +19,7 @@ export default class FeedbackFooter extends Component {
 
 	render() {		
 		return (
-			<div>
+			<div className="comment-form">
 				<button 
 					type="button" 
 					className="like-btn"
